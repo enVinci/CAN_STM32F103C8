@@ -1,0 +1,13 @@
+https://revspace.nl/STM32
+https://github.com/rogerclarkmelbourne/Arduino_STM32
+https://github.com/ARMinARM/stm32flash
+# konwersja do .bin
+arm-none-eabi-objcopy -S -O binary .elf firmware.bin
+# wgrywanie bootloadera python
+python stm32flash.py -w generic_boot20_pc13.bin -v -g 0x0 /dev/ttyUSB0
+# wgrywanie bootloadera
+./stm32flash -w ./generic_boot20_pc13.bin -v -g 0x0 /dev/ttyUSB0
+# metadane elf
+arm-none-eabi-readelf -h blink_led_f103C8.elf
+#wgrywanie wsadu
+./dfu-util -a 2 -d 0x1EAF:0x0003 -R -D firmware.bin
